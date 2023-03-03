@@ -72,9 +72,9 @@ void parse_command(int argc, char *const argv[]) {
 }
 
 /*========================PRINT FUNCTIONS===========================*/
-void print_string(u_int64_t line, const char *filename, char *buffer) {
+void print_string(unsigned int line, const char *filename, char *buffer) {
   mode &FILE_OUTPUT ? printf("%s:", filename) : 0;
-  mode &N_FLAG ? printf("%lu:", line) : 0;
+  mode &N_FLAG ? printf("%u:", line) : 0;
   if (buffer[strlen(buffer) - 1] == '\n') buffer[strlen(buffer) - 1] = '\0';
   printf("%s\n", buffer);
 }
@@ -94,12 +94,12 @@ void comparison(FILE *file, char *filename) {
     int reg_res = regexec(&regex, temp, 1, &matches, 0);
     if (reg_res && (mode & V_FLAG)) {
 #ifndef __APPLE__
-      !(mode & (C_FLAG | L_FLAG | O_FLAG))
+      if (!(mode & (C_FLAG | L_FLAG | O_FLAG))) {
 #else
-      !(mode & (C_FLAG | L_FLAG))
+      if (!(mode & (C_FLAG | L_FLAG))) {
 #endif
-          ? print_string(line, filename, string)
-          : 0;
+        print_string(line, filename, string);
+      }
       ++count_equ_lines;
     } else if (!reg_res && !(mode & O_FLAG)) {
       !(mode & (V_FLAG | C_FLAG | L_FLAG))

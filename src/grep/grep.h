@@ -24,7 +24,7 @@ void usage(void);
 void parse_command(int argc, char *const argv[]);
 
 /*========================PRINT FUNCTIONS===========================*/
-void print_string(u_int64_t line, const char *filename, char *buffer);
+void print_string(unsigned int line, const char *filename, char *buffer);
 void comparison(FILE *, char *);
 
 /*===============FUNCTIONS FOR PATTERN COMPILATION==================*/

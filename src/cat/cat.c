@@ -17,37 +17,45 @@ void usage(void) {
 void parse_command(int argc, char *const argv[]) {
   int opt;
   int opt_index = 0;
-  static struct option long_options[] =
-      {
+  static struct option long_options[] = {
 #ifndef __APPLE__
-          {"number-nonblank", 0, 0, 'b'},
-          {"number", 0, 0, 'n'},
-          {"squeeze-blank", 0, 0, 's'},
+      {"number-nonblank", 0, 0, 'b'},
+      {"number", 0, 0, 'n'},
+      {"squeeze-blank", 0, 0, 's'},
 #endif
-          {0, 0, 0, 0}};
+      {0, 0, 0, 0}};
   while ((opt = getopt_long(argc, argv, "bnetvsTE", long_options,
                             &opt_index)) != -1) {
     switch (opt) {
-      case 'b':mode |= B_FLAG;
+      case 'b':
+        mode |= B_FLAG;
         break;
-      case 'n':mode |= N_FLAG;
+      case 'n':
+        mode |= N_FLAG;
         break;
-      case 'v':mode |= V_FLAG;
-        break;
-      case 't':mode |= T_FLAG;  //  when using implements -v
+      case 'v':
         mode |= V_FLAG;
         break;
-      case 'T':mode |= T_FLAG;
-        break;
-      case 'e':mode |= E_FLAG;  //  when using implements -v
+      case 't':
+        mode |= T_FLAG;  //  when using implements -v
         mode |= V_FLAG;
         break;
-      case 'E':mode |= E_FLAG;
+      case 'T':
+        mode |= T_FLAG;
         break;
-      case 's':mode |= S_FLAG;
+      case 'e':
+        mode |= E_FLAG;  //  when using implements -v
+        mode |= V_FLAG;
+        break;
+      case 'E':
+        mode |= E_FLAG;
+        break;
+      case 's':
+        mode |= S_FLAG;
         break;
       default:
-      case '?':usage();
+      case '?':
+        usage();
         break;
     }
   }  // switch
@@ -56,7 +64,7 @@ void parse_command(int argc, char *const argv[]) {
 void write_file(FILE *file) {
 #define MAX_SIZE 512
   bool enter_flag = 0;
-  u_int64_t line = 0;
+  unsigned int line = 0;
   char buffer[MAX_SIZE];
   while (!feof(file) && fgets(buffer, MAX_SIZE / 2, file)) {
     if (mode & S_FLAG && buffer[0] == '\n' && !enter_flag)
@@ -68,7 +76,7 @@ void write_file(FILE *file) {
 
     if ((mode & N_FLAG && !(mode & B_FLAG)) ||
         (mode & B_FLAG && buffer[0] != '\n'))
-      fprintf(stdout, "%6lu\t", ++line);
+      fprintf(stdout, "%6u\t", ++line);
 
     if (mode & (T_FLAG & ~V_FLAG)) {
       change_line(0, buffer);
