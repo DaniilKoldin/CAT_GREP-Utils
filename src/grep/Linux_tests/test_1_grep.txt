@@ -1,0 +1,36 @@
+// Copyright 2022 brietamm@student.21-school.ru,
+// coluphi@student.21-school.ru,
+// gertudem@student.21-school.ru
+
+#include <stdio.h>
+#include <ncurses.h>
+#include <unistd.h>
+
+
+#define ROWS     25
+#define COLS     80
+#define MAXSPEED 5000
+#define MINSPEED 50
+
+#define MIN_TO_LIVE     2
+#define MIN_TO_BORN     3
+#define MIN_TO_KILL     4
+
+void save_state(int field[][COLS], int save_matr[][COLS]);
+
+int count_live_nieghbours(int field[][COLS], int x, int y);
+
+void new_gen(int field[][COLS], int temp_field[][COLS]);
+
+void draw_world(int world[][COLS], int gen_num,
+                unsigned long long dead, int alive);
+
+int init_world(int field[][COLS], int rows, int cols);
+
+int key_event(int *speed, int *pause);
+
+unsigned int get_live_count(int world[][COLS]);
+
+int dead_cells(int cur_world[][COLS], int last_world[][COLS]);
+
+int main() {
