@@ -24,7 +24,7 @@ void usage(void) {
 }
 
 void parse_command(int argc, char *const argv[]) {
-  int opt;
+  int opt = 0;
   while ((opt = getopt(argc, argv, "e:f:ivcnhsol")) != -1) {
     switch (opt) {
       case 'e':

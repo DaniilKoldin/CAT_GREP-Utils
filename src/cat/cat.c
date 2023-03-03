@@ -15,7 +15,7 @@ void usage(void) {
 }
 
 void parse_command(int argc, char *const argv[]) {
-  int opt;
+  int opt = 0;
   int opt_index = 0;
   static struct option long_options[] = {
 #ifndef __APPLE__
